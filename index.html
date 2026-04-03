@@ -693,7 +693,7 @@ function animCount(id,target,suffix){
   const el=document.getElementById(id);let v=0;
   const i=setInterval(()=>{v=Math.min(v+Math.ceil(target/60),target);el.textContent=v+suffix;if(v>=target)clearInterval(i)},25);
 }
-setTimeout(()=>animCount('cnt1','100+'),800);
+setTimeout(()=>animCount('cnt1',1,'00+'),800);
 
 /* REVEAL */
 const ro=new IntersectionObserver(es=>{
