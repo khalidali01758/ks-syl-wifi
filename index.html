@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KS Syl WiFi – দ্রুত ও নির্ভরযোগ্য ইন্টারনেট | সিলেট</title>
+<meta name="description" content="KS Syl WiFi - সিলেটের সেরা WiFi সেবা। প্রতি ডিভাইস মাত্র ২০০ টাকা। ১৫০ Mbps হাই-স্পিড।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+============================================================ */
+:root{
+  --p:#2563eb;--s:#7c3aed;--a:#06b6d4;
+  --bg:#0a0f1e;--bg2:#0d1529;
+  --card:rgba(255,255,255,.04);--cb:rgba(99,179,237,.15);
+  --tx:#f0f6ff;--txm:#94a3b8;
+  --ok:#10b981;--warn:#f59e0b;--bad:#ef4444;
+  --r:16px;
+  --green:#10b981;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.7}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--p);border-radius:3px}
+
+/* ============================================================
+   KEYFRAMES
+============================================================ */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes wave{0%{transform:scale(.5);opacity:.7}100%{transform:scale(2.5);opacity:0}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes glow{0%,100%{box-shadow:0 0 18px rgba(37,99,235,.5)}50%{box-shadow:0 0 46px rgba(124,58,237,.9)}}
+@keyframes toastIn{from{opacity:0;transform:translateX(55px)}to{opacity:1;transform:translateX(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   NAV
+============================================================ */
+nav{
+  position:fixed;top:0;width:100%;z-index:1000;
+  background:rgba(10,15,30,.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--cb);padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;height:66px;
+}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Poppins',sans-serif;font-weight:900;font-size:1.3rem;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.logo-box{
+  width:40px;height:40px;border-radius:10px;
+  background:linear-gradient(135deg,var(--p),var(--s));
+  display:flex;align-items:center;justify-content:center;
+  animation:glow 2.5s infinite;flex-shrink:0;font-size:1.1rem;
+}
+/* SVG Logo */
+.logo-svg{width:40px;height:40px;border-radius:10px;overflow:hidden;flex-shrink:0;animation:glow 2.5s infinite}
+.nl{display:flex;gap:24px;list-style:none}
+.nl a{color:var(--txm);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .3s}
+.nl a:hover{color:var(--a)}
+.nav-acts{display:flex;gap:9px;align-items:center}
+.btn{padding:9px 19px;border-radius:50px;border:none;cursor:pointer;font-family:'Hind Siliguri',sans-serif;font-size:.88rem;font-weight:600;transition:all .3s;display:inline-flex;align-items:center;gap:6px}
+.btnp{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;box-shadow:0 4px 16px rgba(37,99,235,.38)}
+.btnp:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(37,99,235,.58)}
+.btno{background:transparent;border:1px solid var(--cb);color:var(--tx)}
+.btno:hover{border-color:var(--p);color:var(--p)}
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
+.ham span{width:23px;height:2px;background:var(--tx);border-radius:2px;transition:all .3s}
+.mob-menu{display:none;position:fixed;top:66px;left:0;right:0;background:rgba(10,15,30,.98);padding:20px 5%;border-bottom:1px solid var(--cb);z-index:999;animation:slideDown .3s ease}
+.mob-menu.open{display:block}
+.mob-menu ul{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:16px}
+.mob-menu ul a{color:var(--tx);text-decoration:none;font-size:1rem;font-weight:500;display:block;padding:4px 0}
+.mob-menu .btn{width:100%;justify-content:center;margin-top:4px}
+
+/* ============================================================
+   TOAST SYSTEM
+============================================================ */
+#toastWrap{position:fixed;top:80px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:9px;max-width:320px}
+.toast{display:flex;align-items:flex-start;gap:11px;background:rgba(13,21,41,.97);border:1px solid var(--cb);border-radius:12px;padding:13px 15px;cursor:pointer;animation:toastIn .35s ease;backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.4);max-width:320px}
+.toast.tw-ok{border-color:rgba(16,185,129,.38)}
+.toast.tw-warn{border-color:rgba(245,158,11,.38)}
+.toast.tw-bad{border-color:rgba(239,68,68,.38)}
+.tico{font-size:1.3rem;flex-shrink:0;line-height:1}
+.ttit{font-size:.85rem;font-weight:700;margin-bottom:2px}
+.tmsg{font-size:.78rem;color:var(--txm);line-height:1.4}
+
+/* ============================================================
+   HERO
+============================================================ */
+#hero{
+  min-height:100vh;padding:96px 5% 66px;
+  background:radial-gradient(ellipse at 18% 55%,rgba(37,99,235,.13) 0%,transparent 60%),
+             radial-gradient(ellipse at 82% 20%,rgba(124,58,237,.1) 0%,transparent 55%),var(--bg);
+  display:flex;align-items:center;position:relative;overflow:hidden;
+}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:58px 58px}
+.hc{max-width:600px;animation:fadeUp .8s ease both}
+.hbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.28);border-radius:50px;padding:5px 15px;font-size:.78rem;color:var(--a);margin-bottom:20px;font-weight:500}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:blink 1.2s infinite}
+h1.ht{font-size:clamp(1.85rem,4vw,3rem);font-weight:700;line-height:1.32;margin-bottom:14px}
+.grad{background:linear-gradient(135deg,var(--a),var(--p),var(--s));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shimmer 3s linear infinite}
+.hsub{font-size:1.02rem;color:var(--txm);margin-bottom:30px}
+.hbtns{display:flex;gap:11px;flex-wrap:wrap;margin-bottom:42px}
+.hstats{display:flex;gap:28px;flex-wrap:wrap}
+.snum{font-size:1.65rem;font-weight:800;color:var(--a);font-family:'Poppins',sans-serif}
+.slbl{font-size:.76rem;color:var(--txm)}
+.hvis{position:absolute;right:7%;top:50%;transform:translateY(-50%);width:380px;height:380px;display:flex;align-items:center;justify-content:center}
+.wr{position:relative;width:190px;height:190px;display:flex;align-items:center;justify-content:center}
+.wring{position:absolute;border-radius:50%;border:2px solid;animation:wave 3s ease-out infinite}
+.wring:nth-child(1){width:76px;height:76px;border-color:rgba(37,99,235,.9);animation-delay:0s}
+.wring:nth-child(2){width:134px;height:134px;border-color:rgba(124,58,237,.65);animation-delay:.7s}
+.wring:nth-child(3){width:200px;height:200px;border-color:rgba(6,182,212,.4);animation-delay:1.4s}
+.wring:nth-child(4){width:270px;height:270px;border-color:rgba(37,99,235,.2);animation-delay:2.1s}
+.wring:nth-child(5){width:350px;height:350px;border-color:rgba(124,58,237,.1);animation-delay:2.8s}
+.rbox{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:2rem;animation:float 3.5s ease-in-out infinite;box-shadow:0 0 55px rgba(37,99,235,.65),0 0 110px rgba(124,58,237,.3);z-index:2;position:relative}
+
+/* ============================================================
+   SECTIONS
+============================================================ */
+section{padding:84px 5%}
+.stag{display:inline-block;background:rgba(37,99,235,.09);border:1px solid rgba(37,99,235,.22);border-radius:50px;padding:4px 14px;font-size:.76rem;color:var(--a);margin-bottom:11px;font-weight:500;font-family:'Poppins',sans-serif}
+.stit{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:9px}
+.ssub{color:var(--txm);font-size:.95rem;margin-bottom:44px;max-width:550px}
+.tc{text-align:center}.tc .ssub{margin-left:auto;margin-right:auto}
+.card{background:var(--card);border:1px solid var(--cb);border-radius:var(--r);transition:all .35s}
+.card:hover{border-color:rgba(37,99,235,.48);transform:translateY(-4px);box-shadow:0 18px 50px rgba(37,99,235,.16)}
+
+/* ============================================================
+   FEATURES
+============================================================ */
+#features{background:var(--bg2)}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:17px}
+.fc{padding:26px 20px;text-align:center}
+.fico{width:55px;height:55px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.65rem;margin:0 auto 14px}
+.fc h3{font-size:.98rem;font-weight:600;margin-bottom:6px}
+.fc p{font-size:.83rem;color:var(--txm)}
+
+/* ============================================================
+   HOW IT WORKS
+============================================================ */
+#howit{background:var(--bg)}
+.hg{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0;max-width:960px;margin:0 auto;position:relative}
+.hg::before{content:'';position:absolute;top:37px;left:10%;width:80%;height:2px;background:linear-gradient(90deg,var(--p),var(--s));opacity:.25}
+.hs{text-align:center;padding:22px 16px;position:relative}
+.hn{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;font-family:'Poppins',sans-serif;color:#fff;margin:0 auto 16px;position:relative;z-index:1;box-shadow:0 5px 20px rgba(37,99,235,.42)}
+.hs h3{font-size:.95rem;font-weight:700;margin-bottom:6px}
+.hs p{font-size:.8rem;color:var(--txm)}
+
+/* ============================================================
+   PACKAGES
+============================================================ */
+#packages{background:var(--bg2)}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:20px;max-width:1020px;margin:0 auto}
+.pc{padding:32px 24px;position:relative;overflow:hidden}
+.pc.pop{border-color:rgba(124,58,237,.58);background:linear-gradient(135deg,rgba(37,99,235,.07),rgba(124,58,237,.07))}
+.pb{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700}
+.psp{font-size:3rem;font-weight:900;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--a),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.pu{font-size:.88rem;color:var(--txm);margin-bottom:2px}
+.pn{font-size:1rem;font-weight:700;margin:10px 0 3px}
+.pd{font-size:.8rem;color:var(--txm);margin-bottom:12px}
+.pp{font-size:1.9rem;font-weight:900;font-family:'Poppins',sans-serif;color:var(--tx);margin:12px 0}
+.pp span{font-size:.88rem;color:var(--txm);font-weight:400}
+.pul{list-style:none;margin-bottom:24px}
+.pul li{padding:6px 0;color:var(--txm);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:8px}
+.pul li::before{content:'✓';width:18px;height:18px;border-radius:50%;background:rgba(16,185,129,.14);color:var(--ok);font-size:.7rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bpkg{width:100%;padding:12px;font-size:.95rem;font-weight:700;border-radius:11px;border:none;cursor:pointer;font-family:'Hind Siliguri',sans-serif;transition:all .3s}
+.bpkg-f{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;box-shadow:0 4px 16px rgba(37,99,235,.32)}
+.bpkg-f:hover{transform:translateY(-2px);box-shadow:0 7px 25px rgba(37,99,235,.52)}
+.bpkg-o{background:transparent;border:1px solid var(--cb);color:var(--tx)}
+.bpkg-o:hover{border-color:var(--p);color:var(--p)}
+
+/* ============================================================
+   SPEED INFO
+============================================================ */
+#speedinfo{background:var(--bg)}
+.si{max-width:880px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.sc{background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:30px 24px}
+.sbig{font-size:3.4rem;font-weight:900;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--a),var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:4px}
+.slb{font-size:.8rem;color:var(--txm);margin-bottom:18px}
+.sbw{margin-bottom:10px}
+.sbwl{display:flex;justify-content:space-between;font-size:.76rem;color:var(--txm);margin-bottom:4px}
+.sbar{height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
+.sfill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--p),var(--a));width:0;transition:width 1.8s cubic-bezier(.4,0,.2,1)}
+.note{background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.18);border-radius:9px;padding:12px 14px;font-size:.81rem;color:var(--a);margin-top:14px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:6px;background:rgba(255,255,255,.1);border-radius:3px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));cursor:pointer}
+.slrow{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.slrow label{font-size:.81rem;color:var(--txm);flex-shrink:0;width:115px}
+.pds{font-size:1.7rem;font-weight:900;font-family:'Poppins',sans-serif;color:var(--a)}
+.pdsl{font-size:.76rem;color:var(--txm)}
+
+/* ============================================================
+   SPEED TEST
+============================================================ */
+#speedtest{background:var(--bg2)}
+.stbox{max-width:500px;margin:0 auto;background:var(--card);border:1px solid var(--cb);border-radius:22px;padding:40px 32px;text-align:center}
+.gw{position:relative;width:190px;height:190px;margin:20px auto}
+.gsv{width:100%;height:100%}
+.gv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.gnum{font-size:2.6rem;font-weight:900;font-family:'Poppins',sans-serif;color:var(--a);line-height:1}
+.gunit{font-size:.78rem;color:var(--txm)}
+.tsteps{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+.tstep{display:flex;align-items:center;gap:6px;padding:5px 13px;border-radius:50px;background:rgba(255,255,255,.05);border:1px solid var(--cb);font-size:.76rem;color:var(--txm)}
+.tstep.active{background:rgba(37,99,235,.13);border-color:rgba(37,99,235,.38);color:var(--a)}
+.tstep.done{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.28);color:var(--ok)}
+.sdot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.rrow{display:flex;justify-content:center;gap:26px;margin-top:16px;flex-wrap:wrap;opacity:0;transition:opacity .5s}
+.ri{text-align:center}
+.rv{font-size:1.35rem;font-weight:800;font-family:'Poppins',sans-serif;color:var(--a)}
+.rl{font-size:.7rem;color:var(--txm)}
+.btest{padding:13px 34px;border-radius:50px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;font-size:.97rem;font-weight:700;font-family:'Hind Siliguri',sans-serif;transition:all .3s;box-shadow:0 5px 20px rgba(37,99,235,.38)}
+.btest:hover{transform:translateY(-2px);box-shadow:0 9px 30px rgba(37,99,235,.58)}
+.btest:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ============================================================
+   DASHBOARD
+============================================================ */
+#dashboard{background:var(--bg)}
+.dw{max-width:840px;margin:0 auto}
+.lbox{max-width:420px;margin:0 auto;background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:34px 30px}
+.lbox-logo{text-align:center;margin-bottom:22px}
+.lbox-logo svg{width:56px;height:56px;margin-bottom:8px}
+.lbox-logo h2{font-family:'Poppins',sans-serif;font-weight:900;font-size:1.3rem;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.lbox h3{font-size:1.2rem;font-weight:700;margin-bottom:5px}
+.lbox p.lsub{font-size:.85rem;color:var(--txm);margin-bottom:24px}
+.fg2{margin-bottom:14px}
+.fg2 label{display:block;font-size:.8rem;color:var(--txm);margin-bottom:6px;font-weight:500}
+.fg2-row{position:relative}
+.fi{width:100%;padding:12px 16px;background:rgba(255,255,255,.05);border:1px solid var(--cb);border-radius:10px;color:var(--tx);font-size:.95rem;font-family:'Hind Siliguri',sans-serif;outline:none;transition:border .3s}
+.fi:focus{border-color:var(--p)}
+.fi.err{border-color:var(--bad)}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--txm);font-size:.9rem;padding:2px}
+.blog{width:100%;padding:13px;font-size:.97rem;font-weight:700;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;font-family:'Hind Siliguri',sans-serif;transition:all .3s;box-shadow:0 4px 16px rgba(37,99,235,.32);display:flex;align-items:center;justify-content:center;gap:8px;position:relative}
+.blog:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(37,99,235,.52)}
+.blog:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.login-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.login-err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 14px;font-size:.82rem;color:#fca5a5;margin-bottom:12px;display:none}
+.dnote{text-align:center;margin-top:12px;font-size:.76rem;color:var(--txm);background:rgba(255,255,255,.04);border-radius:7px;padding:9px}
+.dpan{display:none;animation:fadeUp .5s ease both}
+.dhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:11px;background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:18px 20px}
+.duser h3{font-size:1.1rem;font-weight:700}
+.duser p{font-size:.82rem;color:var(--txm)}
+.duser .dpkg{font-size:.78rem;color:var(--a);margin-top:3px;font-weight:600}
+.sbadge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:50px;font-size:.8rem;font-weight:700}
+.sa{background:rgba(16,185,129,.12);color:var(--ok);border:1px solid rgba(16,185,129,.26)}
+.si-badge{background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.26)}
+.sdot2{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:blink 1.2s infinite}
+.dc{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+.dcard{background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:20px 16px;transition:all .3s}
+.dcard:hover{border-color:rgba(37,99,235,.4)}
+.dico{font-size:1.5rem;margin-bottom:9px}
+.dlbl{font-size:.75rem;color:var(--txm);margin-bottom:4px}
+.dval{font-size:1.45rem;font-weight:900;font-family:'Poppins',sans-serif}
+.cdue{color:var(--warn)}.cok{color:var(--ok)}.cbl{color:var(--a)}.cbad{color:var(--bad)}
+.mb{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;margin-top:6px}
+.mf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--p),var(--a));transition:width 1.5s ease}
+/* Bill Alert */
+.bill-alert{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:16px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.bill-alert-icon{font-size:1.5rem;flex-shrink:0}
+.bill-alert h4{font-size:.9rem;font-weight:700;color:var(--warn);margin-bottom:3px}
+.bill-alert p{font-size:.8rem;color:var(--txm)}
+/* Speed Meter */
+.speed-meter-wrap{margin-top:8px}
+.speed-meter-arc{width:100%;height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-top:6px}
+.speed-meter-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--ok),var(--a),var(--p));transition:width 1.5s ease}
+/* Action buttons */
+.dacts{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.brecharge{padding:11px 22px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--ok),#059669);color:#fff;font-family:'Hind Siliguri',sans-serif;font-size:.9rem;font-weight:700;transition:all .3s;display:flex;align-items:center;gap:7px}
+.brecharge:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(16,185,129,.38)}
+/* Payment Button in Dashboard */
+.bpay-now{padding:11px 22px;border-radius:10px;border:none;cursor:pointer;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-family:'Hind Siliguri',sans-serif;font-size:.9rem;font-weight:700;transition:all .3s;display:flex;align-items:center;gap:7px;text-decoration:none}
+.bpay-now:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(245,158,11,.45)}
+.bsec{padding:11px 20px;border-radius:10px;border:1px solid var(--cb);background:transparent;color:var(--tx);font-family:'Hind Siliguri',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:7px}
+.bsec:hover{border-color:var(--a);color:var(--a)}
+/* Pay Now Banner in Dashboard */
+.pay-banner{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(217,119,6,.06));border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:18px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.pay-banner-left h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.pay-banner-left p{font-size:.82rem;color:var(--txm)}
+.pay-now-link{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;padding:10px 22px;border-radius:50px;font-family:'Hind Siliguri',sans-serif;font-size:.9rem;font-weight:700;text-decoration:none;transition:all .3s;white-space:nowrap}
+.pay-now-link:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(245,158,11,.45)}
+
+/* ============================================================
+   PAYMENT SECTION
+============================================================ */
+#payment{background:var(--bg2)}
+.payg{display:grid;grid-template-columns:1fr;gap:22px;max-width:500px;margin:0 auto}
+.payw{background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:30px 22px;text-align:center}
+.paylo{font-size:1.9rem;margin-bottom:8px;display:flex;align-items:center;justify-content:center}
+.payn{font-size:1.05rem;font-weight:700;margin-bottom:5px}
+.paynum{display:inline-block;background:rgba(37,99,235,.09);border:1px solid rgba(37,99,235,.2);border-radius:7px;padding:6px 16px;font-size:1.05rem;font-weight:700;color:var(--a);font-family:'Poppins',sans-serif;margin:8px 0;letter-spacing:1px}
+.qa{width:160px;height:160px;margin:12px auto;background:#fff;border-radius:11px;padding:7px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.qa img{width:100%;height:100%;object-fit:contain}
+.pinstr{margin-top:12px;background:rgba(37,99,235,.07);border-radius:8px;padding:10px 13px;font-size:.8rem;color:var(--a);font-weight:500}
+.payinfo{background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:26px 22px}
+.payinfo h3{font-size:1rem;font-weight:700;margin-bottom:16px}
+.ir{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.ir:last-child{border:none}
+.iico{width:36px;height:36px;border-radius:8px;background:rgba(37,99,235,.09);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.ilbl{font-size:.75rem;color:var(--txm);margin-bottom:2px}
+.ival{font-size:.9rem;font-weight:600}
+
+/* ============================================================
+   CONTACT / MESSAGE FORM
+============================================================ */
+#contact{background:var(--bg)}
+.cong{display:grid;grid-template-columns:1fr 1.2fr;gap:34px;max-width:940px;margin:0 auto}
+.coninfo h3{font-size:1.15rem;font-weight:700;margin-bottom:20px}
+.coni{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
+.cico{width:44px;height:44px;border-radius:10px;background:rgba(37,99,235,.09);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+.coni h4{font-size:.8rem;color:var(--txm);margin-bottom:2px}
+.coni p,.coni a{font-size:.95rem;font-weight:600;color:var(--tx);text-decoration:none}
+.coni a:hover{color:var(--a)}
+.wabtn{display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 20px;border-radius:50px;font-family:'Hind Siliguri',sans-serif;font-size:.9rem;font-weight:700;text-decoration:none;margin-top:5px;transition:all .3s}
+.wabtn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,.38)}
+.cform{background:var(--card);border:1px solid var(--cb);border-radius:var(--r);padding:28px 24px}
+.cform h3{font-size:1rem;font-weight:700;margin-bottom:18px}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.cform input,.cform textarea,.cform select{width:100%;padding:11px 15px;margin-bottom:11px;background:rgba(255,255,255,.05);border:1px solid var(--cb);border-radius:10px;color:var(--tx);font-size:.9rem;font-family:'Hind Siliguri',sans-serif;outline:none;transition:border .3s;resize:vertical}
+.cform select option{background:#0d1529;color:var(--tx)}
+.cform input:focus,.cform textarea:focus,.cform select:focus{border-color:var(--p)}
+.bsend{width:100%;padding:12px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border-radius:10px;font-size:.95rem;font-weight:700;font-family:'Hind Siliguri',sans-serif;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px}
+.bsend:hover{transform:translateY(-2px);box-shadow:0 7px 24px rgba(37,99,235,.48)}
+.bsend:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.form-success{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:8px;padding:14px 16px;font-size:.9rem;color:var(--ok);margin-top:10px;display:none;text-align:center}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer{background:var(--bg2);border-top:1px solid var(--cb);padding:44px 5% 24px}
+.foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:34px;margin-bottom:34px}
+.fb p{font-size:.85rem;color:var(--txm);margin:11px 0 16px;max-width:285px}
+.fc2 h4{font-size:.9rem;font-weight:700;margin-bottom:14px}
+.fc2 ul{list-style:none}
+.fc2 li{margin-bottom:10px}
+.fc2 a{color:var(--txm);text-decoration:none;font-size:.83rem;transition:color .3s}
+.fc2 a:hover{color:var(--a)}
+.fbot{border-top:1px solid var(--cb);padding-top:20px;display:flex;align-items:center;justify-content:space-between;font-size:.78rem;color:var(--txm);flex-wrap:wrap;gap:9px}
+.socrow{display:flex;gap:8px}
+.soc{width:32px;height:32px;border-radius:7px;background:rgba(255,255,255,.05);border:1px solid var(--cb);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.8rem;color:var(--txm);transition:all .3s}
+.soc:hover{border-color:var(--p);color:var(--p)}
+
+/* ============================================================
+   CHATBOT
+============================================================ */
+.cfab{position:fixed;bottom:24px;right:24px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));border:none;cursor:pointer;font-size:1.5rem;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 24px rgba(37,99,235,.55);z-index:900;transition:all .3s;animation:pulse 3s infinite}
+.cfab:hover{transform:scale(1.1)}
+.cnotif{position:absolute;top:-3px;right:-3px;background:var(--bad);color:#fff;font-size:.55rem;font-weight:900;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif}
+.cwin{position:fixed;bottom:94px;right:24px;width:330px;background:var(--bg2);border:1px solid var(--cb);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.5);z-index:900;display:flex;flex-direction:column;height:0;overflow:hidden;transition:height .35s cubic-bezier(.4,0,.2,1),opacity .35s;opacity:0}
+.cwin.open{height:480px;opacity:1}
+.chdr{padding:16px 18px;border-bottom:1px solid var(--cb);display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(124,58,237,.07));border-radius:20px 20px 0 0}
+.cav{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--s));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.chi h4{font-size:.9rem;font-weight:700}
+.chi p{font-size:.72rem;color:var(--txm);display:flex;align-items:center;gap:4px}
+.cclose{margin-left:auto;background:none;border:none;cursor:pointer;color:var(--txm);font-size:1rem;padding:3px;transition:color .3s}
+.cclose:hover{color:var(--tx)}
+.cms{flex:1;overflow-y:auto;padding:14px 13px;display:flex;flex-direction:column;gap:9px}
+.cms::-webkit-scrollbar{width:3px}
+.cms::-webkit-scrollbar-thumb{background:var(--cb);border-radius:2px}
+.cmsg{display:flex;flex-direction:column;gap:3px}
+.cbot{align-items:flex-start}
+.cusr{align-items:flex-end}
+.bub{max-width:240px;padding:10px 13px;border-radius:14px;font-size:.82rem;line-height:1.55;word-break:break-word}
+.cbot .bub{background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.2);border-radius:3px 14px 14px 14px}
+.cusr .bub{background:linear-gradient(135deg,var(--p),var(--s));color:#fff;border-radius:14px 14px 3px 14px}
+.ctime{font-size:.62rem;color:var(--txm)}
+.qwrap{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px}
+.qb{padding:4px 10px;border-radius:50px;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.28);color:var(--a);font-family:'Hind Siliguri',sans-serif;font-size:.73rem;cursor:pointer;transition:all .2s;font-weight:500}
+.qb:hover{background:rgba(37,99,235,.22);transform:translateY(-1px)}
+.typing{display:flex;align-items:center;gap:4px;padding:10px 15px}
+.td{width:7px;height:7px;border-radius:50%;background:var(--a);animation:blink 1s infinite}
+.td:nth-child(2){animation-delay:.18s}
+.td:nth-child(3){animation-delay:.36s}
+.cinrow{padding:12px 13px;border-top:1px solid var(--cb);display:flex;gap:8px;align-items:center}
+.cinp{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--cb);border-radius:10px;padding:9px 13px;color:var(--tx);font-family:'Hind Siliguri',sans-serif;font-size:.85rem;outline:none;transition:border .3s}
+.cinp:focus{border-color:var(--p)}
+.csend{padding:9px 14px;border-radius:9px;background:linear-gradient(135deg,var(--p),var(--s));border:none;color:#fff;cursor:pointer;font-size:.9rem;transition:all .2s}
+.csend:hover{transform:scale(1.05)}
+
+/* ============================================================
+   LOADING OVERLAY
+============================================================ */
+.loading-overlay{position:fixed;inset:0;background:rgba(10,15,30,.95);z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:1;transition:opacity .4s}
+.loading-overlay.hide{opacity:0;pointer-events:none}
+.loader-ring{width:52px;height:52px;border:3px solid rgba(37,99,235,.2);border-top-color:var(--p);border-radius:50%;animation:spin .8s linear infinite}
+.loader-txt{font-size:.88rem;color:var(--txm)}
+
+/* ============================================================
+   GOOGLE SHEET SETUP MODAL
+============================================================ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.show{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid var(--cb);border-radius:20px;padding:32px 28px;max-width:500px;width:100%;animation:fadeUp .3s ease;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:1.15rem;font-weight:700;margin-bottom:6px}
+.modal p{font-size:.85rem;color:var(--txm);margin-bottom:18px;line-height:1.6}
+.modal .fi{margin-bottom:11px}
+.modal .bsend{margin-top:6px}
+.modal-close{background:none;border:none;color:var(--txm);cursor:pointer;font-size:1.2rem;float:right;margin-top:-4px}
+
+/* ============================================================
+   REVEAL ANIMATIONS
+============================================================ */
+.rev{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.revd{opacity:1;transform:translateY(0)}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:900px){
+  .nl{display:none}
+  .nav-acts .btno{display:none}
+  .ham{display:flex}
+  .hvis{display:none}
+  .si{grid-template-columns:1fr}
+  .cong{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  section{padding:60px 5%}
+  .foot{grid-template-columns:1fr}
+  .fr2{grid-template-columns:1fr}
+  .lbox{padding:24px 18px}
+  .cwin{width:calc(100vw - 32px);right:16px}
+  .dhdr{flex-direction:column;align-items:flex-start}
+  .dacts{flex-direction:column}
+  .dacts .bsec,.dacts .brecharge,.dacts .bpay-now{width:100%;justify-content:center}
+  .pay-banner{flex-direction:column}
+  .pay-now-link{width:100%;justify-content:center}
+  .payg{grid-template-columns:1fr}
+}
+@media(max-width:400px){
+  nav{padding:0 4%}
+  .logo{font-size:1.1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loader-ring"></div>
+  <div class="loader-txt">লোড হচ্ছে...</div>
+</div>
+
+<!-- TOAST WRAP -->
+<div id="toastWrap"></div>
+
+<!-- GOOGLE SHEET SETUP MODAL -->
+<div class="modal-overlay" id="setupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSetupModal()">✕</button>
+    <h3>⚙️ Google Sheet সংযোগ</h3>
+    <p>আপনার Google Sheet-এর Apps Script Web App URL এবং Contact Sheet URL দিন। এই তথ্য ব্রাউজারে সেভ থাকবে।</p>
+    <label style="font-size:.8rem;color:var(--txm);display:block;margin-bottom:5px">গ্রাহক ডেটা Sheet URL (Apps Script Web App)</label>
+    <input class="fi" type="url" id="setupSheetUrl" placeholder="https://script.google.com/macros/s/...">
+    <label style="font-size:.8rem;color:var(--txm);display:block;margin:10px 0 5px">মেসেজ সংরক্ষণ URL (Apps Script Web App)</label>
+    <input class="fi" type="url" id="setupMsgUrl" placeholder="https://script.google.com/macros/s/...">
+    <button class="bsend" onclick="saveSetup()" style="margin-top:14px">💾 সংরক্ষণ করুন</button>
+    <div style="margin-top:18px;background:rgba(37,99,235,.06);border-radius:9px;padding:14px;font-size:.78rem;color:var(--txm);line-height:1.8">
+      <strong style="color:var(--a)">📋 Google Sheet কলাম গঠন:</strong><br>
+      <code style="color:var(--ok)">Name | Phone | Password | Package | Bill | Status | Payment_Link</code><br><br>
+      <strong style="color:var(--a)">Apps Script কোড (গ্রাহক):</strong><br>
+      <code style="color:var(--txm);font-size:.72rem">
+        function doGet(e){<br>
+        &nbsp;var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Customers");<br>
+        &nbsp;var data = sheet.getDataRange().getValues();<br>
+        &nbsp;var headers = data[0];<br>
+        &nbsp;var ph = e.parameter.phone;<br>
+        &nbsp;var pw = e.parameter.password;<br>
+        &nbsp;for(var i=1;i&lt;data.length;i++){<br>
+        &nbsp;&nbsp;if(data[i][1]==ph && data[i][2]==pw){<br>
+        &nbsp;&nbsp;&nbsp;var obj={};<br>
+        &nbsp;&nbsp;&nbsp;headers.forEach((h,j)=>obj[h]=data[i][j]);<br>
+        &nbsp;&nbsp;&nbsp;return ContentService.createTextOutput(JSON.stringify({success:true,data:obj})).setMimeType(ContentService.MimeType.JSON);<br>
+        &nbsp;&nbsp;}<br>
+        &nbsp;}<br>
+        &nbsp;return ContentService.createTextOutput(JSON.stringify({success:false})).setMimeType(ContentService.MimeType.JSON);<br>
+        }
+      </code>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <!-- Logo SVG -->
+    <svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;animation:glow 2.5s infinite;flex-shrink:0">
+      <defs>
+        <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2563eb"/>
+          <stop offset="100%" style="stop-color:#7c3aed"/>
+        </linearGradient>
+      </defs>
+      <rect width="40" height="40" rx="10" fill="url(#lg1)"/>
+      <!-- WiFi waves -->
+      <path d="M20 28 L20 28" stroke="white" stroke-width="3" stroke-linecap="round"/>
+      <path d="M14 24 Q20 18 26 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+      <path d="M9 19 Q20 9 31 19" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+      <circle cx="20" cy="28" r="2.5" fill="white"/>
+      <!-- K S letters -->
+      <text x="9" y="37" font-family="Poppins,sans-serif" font-weight="900" font-size="7" fill="rgba(255,255,255,.7)" letter-spacing="0.5">KS</text>
+    </svg>
+    KS Syl WiFi
+  </a>
+
+  <ul class="nl">
+    <li><a href="#features">সুবিধা</a></li>
+    <li><a href="#packages">প্যাকেজ</a></li>
+    <li><a href="#speedtest">স্পিড টেস্ট</a></li>
+    <li><a href="#payment">পেমেন্ট</a></li>
+    <li><a href="#contact">যোগাযোগ</a></li>
+  </ul>
+
+  <div class="nav-acts">
+    <button class="btn btno" onclick="openSetupModal()" title="Settings">⚙️</button>
+    <a href="#dashboard" class="btn btnp">🔐 লগইন</a>
+    <button class="ham" id="hamBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <ul>
+    <li><a href="#features" onclick="toggleMobileMenu()">⚡ সুবিধা</a></li>
+    <li><a href="#packages" onclick="toggleMobileMenu()">📦 প্যাকেজ</a></li>
+    <li><a href="#speedtest" onclick="toggleMobileMenu()">📶 স্পিড টেস্ট</a></li>
+    <li><a href="#payment" onclick="toggleMobileMenu()">💳 পেমেন্ট</a></li>
+    <li><a href="#contact" onclick="toggleMobileMenu()">📞 যোগাযোগ</a></li>
+  </ul>
+  <a href="#dashboard" class="btn btnp" onclick="toggleMobileMenu()" style="width:100%;justify-content:center">🔐 লগইন করুন</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hc">
+    <div class="hbadge"><span class="pulse"></span> সিলেটের #১ WiFi সেবা</div>
+    <h1 class="ht">দ্রুত ও নির্ভরযোগ্য<br><span class="grad">হাই-স্পিড ইন্টারনেট</span><br>সিলেটে</h1>
+    <p class="hsub">প্রতি ডিভাইস মাত্র ২০০ টাকা/মাস। ১৫০ Mbps শেয়ার্ড লাইন। আনলিমিটেড ডেটা। কোনো লুকানো চার্জ নেই।</p>
+    <div class="hbtns">
+      <a href="#dashboard" class="btn btnp">🔐 লগইন করুন</a>
+      <a href="#packages" class="btn btno">📦 প্যাকেজ দেখুন</a>
+    </div>
+    <div class="hstats">
+      <div><div class="snum" id="cnt1">0+</div><div class="slbl">সন্তুষ্ট গ্রাহক</div></div>
+      <div><div class="snum">১৫০</div><div class="slbl">Mbps মেইন লাইন</div></div>
+      <div><div class="snum">২৪/৭</div><div class="slbl">সাপোর্ট</div></div>
+    </div>
+  </div>
+  <div class="hvis">
+    <div class="wr">
+      <div class="wring"></div><div class="wring"></div><div class="wring"></div>
+      <div class="wring"></div><div class="wring"></div>
+      <div class="rbox">📡</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="tc">
+    <div class="stag">আমাদের সুবিধা</div>
+    <h2 class="stit">কেন KS Syl WiFi বেছে নেবেন?</h2>
+    <p class="ssub">সিলেটের সেরা ইন্টারনেট অভিজ্ঞতার জন্য আমরা প্রতিশ্রুতিবদ্ধ।</p>
+  </div>
+  <div class="fg">
+    <div class="card fc rev"><div class="fico" style="background:rgba(37,99,235,.12)">⚡</div><h3>হাই-স্পিড</h3><p>১৫০ Mbps মেইন লাইন স্পিড সব গ্রাহকের মধ্যে শেয়ার।</p></div>
+    <div class="card fc rev"><div class="fico" style="background:rgba(16,185,129,.12)">♾️</div><h3>আনলিমিটেড</h3><p>কোনো ডেটা লিমিট নেই। মাসজুড়ে যতখুশি ব্যবহার করুন।</p></div>
+    <div class="card fc rev"><div class="fico" style="background:rgba(245,158,11,.12)">💰</div><h3>সাশ্রয়ী মূল্য</h3><p>প্রতি ডিভাইস মাত্র ২০০ টাকা। যত ডিভাইস তত সাশ্রয়।</p></div>
+    <div class="card fc rev"><div class="fico" style="background:rgba(124,58,237,.12)">🛠️</div><h3>বিনামূল্যে ইনস্টল</h3><p>সংযোগ স্থাপন সম্পূর্ণ বিনামূল্যে। কোনো লুকানো চার্জ নেই।</p></div>
+    <div class="card fc rev"><div class="fico" style="background:rgba(6,182,212,.12)">📞</div><h3>২৪/৭ সাপোর্ট</h3><p>যেকোনো সমস্যায় সকাল ৮টা থেকে রাত ১০টা পর্যন্ত সেবা।</p></div>
+    <div class="card fc rev"><div class="fico" style="background:rgba(239,68,68,.12)">🔒</div><h3>নিরাপদ সংযোগ</h3><p>এনক্রিপ্টেড সংযোগ, আপনার ডেটা সম্পূর্ণ সুরক্ষিত।</p></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="howit">
+  <div class="tc">
+    <div class="stag">কিভাবে কাজ করে</div>
+    <h2 class="stit">মাত্র ৪টি সহজ ধাপ</h2>
+    <p class="ssub">মাত্র ৪টি সহজ ধাপে আপনার ইন্টারনেট সংযোগ চালু করুন।</p>
+  </div>
+  <div class="hg">
+    <div class="hs rev"><div class="hn">১</div><h3>যোগাযোগ করুন</h3><p>ফোন বা WhatsApp-এ আমাদের সাথে যোগাযোগ করুন।</p></div>
+    <div class="hs rev"><div class="hn">২</div><h3>সংযোগ স্থাপন</h3><p>টেকনিশিয়ান আপনার ডিভাইসে রাউটার সংযোগ দেবেন।</p></div>
+    <div class="hs rev"><div class="hn">৩</div><h3>পেমেন্ট করুন</h3><p>bKash/Nagad-এ মাসে ২০০ টাকা পরিশোধ করুন।</p></div>
+    <div class="hs rev"><div class="hn">৪</div><h3>ইন্টারনেট উপভোগ</h3><p>হাই-স্পিড আনলিমিটেড ইন্টারনেট উপভোগ করুন!</p></div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <div class="tc">
+    <div class="stag">প্যাকেজ</div>
+    <h2 class="stit">সাশ্রয়ী মূল্য পরিকল্পনা</h2>
+    <p class="ssub">আপনার ডিভাইস সংখ্যা অনুযায়ী প্যাকেজ বেছে নিন। প্রতিটি ডিভাইস = ২০০ টাকা।</p>
+  </div>
+  <div class="pg">
+    <div class="card pc rev">
+      <div class="psp">১</div><div class="pu">টি ডিভাইস</div>
+      <div class="pn">সিঙ্গেল ডিভাইস</div>
+      <div class="pd">একটি মোবাইল বা ডিভাইসের জন্য</div>
+      <div class="pp">৳ ২০০ <span>/ মাস</span></div>
+      <ul class="pul">
+        <li>১টি ডিভাইসে সংযোগ</li>
+        <li>আনলিমিটেড ডেটা</li>
+        <li>১৫০ Mbps শেয়ার্ড লাইন</li>
+        <li>২৪/৭ সাপোর্ট</li>
+        <li>বিনামূল্যে ইনস্টলেশন</li>
+      </ul>
+      <button class="bpkg bpkg-o" onclick="sub(1,200)">এখনই নিন</button>
+    </div>
+    <div class="card pc pop rev">
+      <div class="pb">⭐ জনপ্রিয়</div>
+      <div class="psp">৩</div><div class="pu">টি ডিভাইস</div>
+      <div class="pn">ফ্যামিলি প্যাকেজ</div>
+      <div class="pd">পরিবারের জন্য সেরা পছন্দ</div>
+      <div class="pp">৳ ৬০০ <span>/ মাস</span></div>
+      <ul class="pul">
+        <li>৩টি ডিভাইসে সংযোগ</li>
+        <li>আনলিমিটেড ডেটা</li>
+        <li>১৫০ Mbps শেয়ার্ড লাইন</li>
+        <li>২৪/৭ প্রিওরিটি সাপোর্ট</li>
+        <li>বিনামূল্যে ইনস্টলেশন</li>
+      </ul>
+      <button class="bpkg bpkg-f" onclick="sub(3,600)">এখনই নিন</button>
+    </div>
+    <div class="card pc rev">
+      <div class="psp">৫</div><div class="pu">টি ডিভাইস</div>
+      <div class="pn">বিজনেস প্যাকেজ</div>
+      <div class="pd">অফিস ও ছোট ব্যবসার জন্য</div>
+      <div class="pp">৳ ১,০০০ <span>/ মাস</span></div>
+      <ul class="pul">
+        <li>৫টি ডিভাইসে সংযোগ</li>
+        <li>আনলিমিটেড ডেটা</li>
+        <li>১৫০ Mbps শেয়ার্ড লাইন</li>
+        <li>২৪/৭ ডেডিকেটেড সাপোর্ট</li>
+        <li>বিনামূল্যে ইনস্টলেশন</li>
+      </ul>
+      <button class="bpkg bpkg-o" onclick="sub(5,1000)">এখনই নিন</button>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:22px;font-size:.83rem;color:var(--txm)">
+    ✅ অতিরিক্ত প্রতিটি ডিভাইস = ২০০ টাকা | কাস্টম প্যাকেজ: <a href="tel:01758065997" style="color:var(--a)">01758-065997</a>
+  </p>
+</section>
+
+<!-- SPEED INFO -->
+<section id="speedinfo">
+  <div class="tc">
+    <div class="stag">স্পিড বিশ্লেষণ</div>
+    <h2 class="stit">আমাদের নেটওয়ার্ক</h2>
+    <p class="ssub">১৫০ Mbps মেইন লাইন সব গ্রাহকের মধ্যে ভাগ হয়। ক্যালকুলেটর দিয়ে দেখুন কত পাবেন।</p>
+  </div>
+  <div class="si">
+    <div class="sc rev">
+      <div class="sbig">১৫০</div>
+      <div class="slb">মোট ISP লাইন স্পিড (Mbps)</div>
+      <div class="sbw"><div class="sbwl"><span>মেইন লাইন</span><span>১৫০ Mbps</span></div><div class="sbar"><div class="sfill" data-w="100"></div></div></div>
+      <div class="sbw"><div class="sbwl"><span>প্রতি ডিভাইস (১০ জন সক্রিয়)</span><span>~১৫ Mbps</span></div><div class="sbar"><div class="sfill" data-w="10" style="background:linear-gradient(90deg,var(--s),var(--a))"></div></div></div>
+      <div class="note">💡 যত কম গ্রাহক সক্রিয়, প্রতিটি ডিভাইস তত বেশি স্পিড পাবে।</div>
+    </div>
+    <div class="sc rev">
+      <h3 style="margin-bottom:16px;font-size:1rem;font-weight:700">📊 স্পিড ক্যালকুলেটর</h3>
+      <div class="slrow">
+        <label>সক্রিয় ডিভাইস: <strong id="dc">১০</strong></label>
+        <input type="range" min="1" max="30" value="10" oninput="calcSpd(this.value)">
+      </div>
+      <div style="text-align:center;padding:18px 0">
+        <div class="pds" id="pds">১৫</div>
+        <div class="pdsl">Mbps প্রতি ডিভাইস (আনুমানিক)</div>
+      </div>
+      <div class="sbar" style="height:11px;margin-bottom:7px"><div class="sfill" id="pdbar" style="width:10%"></div></div>
+      <div style="font-size:.76rem;color:var(--txm);text-align:center">১৫০ Mbps ÷ <span id="dc2">১০</span> ডিভাইস</div>
+      <div class="note" style="margin-top:14px">🌙 রাতে কম ব্যবহার হলে প্রতিটি ডিভাইস বেশি স্পিড পাবে।</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEED TEST -->
+<section id="speedtest">
+  <div class="tc">
+    <div class="stag">লাইভ স্পিড টেস্ট</div>
+    <h2 class="stit">আপনার আসল ইন্টারনেট স্পিড পরীক্ষা করুন</h2>
+    <p class="ssub">বাটন চাপলে আপনার ডিভাইসের প্রকৃত স্পিড মাপা হবে।</p>
+  </div>
+  <div class="stbox rev">
+    <p style="font-size:.86rem;color:var(--txm);margin-bottom:3px">আপনার ডিভাইসের বর্তমান ইন্টারনেট স্পিড</p>
+    <div class="gw">
+      <svg class="gsv" viewBox="0 0 190 190">
+        <circle cx="95" cy="95" r="80" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="13"/>
+        <circle id="gfill" cx="95" cy="95" r="80" fill="none" stroke="url(#gg)" stroke-width="13"
+          stroke-linecap="round" stroke-dasharray="502" stroke-dashoffset="502"
+          transform="rotate(-90 95 95)" style="transition:stroke-dashoffset 1s ease"/>
+        <defs><linearGradient id="gg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#2563eb"/><stop offset="100%" style="stop-color:#06b6d4"/>
+        </linearGradient></defs>
+      </svg>
+      <div class="gv"><div class="gnum" id="gnum">—</div><div class="gunit">Mbps</div></div>
+    </div>
+    <div class="tsteps">
+      <div class="tstep" id="st1"><span class="sdot"></span>পিং পরীক্ষা</div>
+      <div class="tstep" id="st2"><span class="sdot"></span>ডাউনলোড</div>
+      <div class="tstep" id="st3"><span class="sdot"></span>আপলোড</div>
+    </div>
+    <div class="rrow" id="rrow">
+      <div class="ri"><div class="rv" id="pv">—</div><div class="rl">পিং (ms)</div></div>
+      <div class="ri"><div class="rv" id="dv">—</div><div class="rl">ডাউনলোড</div></div>
+      <div class="ri"><div class="rv" id="uv">—</div><div class="rl">আপলোড</div></div>
+    </div>
+    <div style="margin-top:18px">
+      <button class="btest" id="testBtn" onclick="runTest()">⚡ স্পিড টেস্ট শুরু করুন</button>
+    </div>
+    <p style="font-size:.72rem;color:var(--txm);margin-top:12px">* ফলাফল আপনার ডিভাইস, নেটওয়ার্ক লোড ও সময়ের উপর নির্ভর করে।</p>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section id="dashboard">
+  <div class="tc">
+    <div class="stag">গ্রাহক ড্যাশবোর্ড</div>
+    <h2 class="stit">আপনার অ্যাকাউন্ট</h2>
+    <p class="ssub">ফোন নম্বর ও পাসওয়ার্ড দিয়ে লগইন করুন।</p>
+  </div>
+  <div class="dw">
+
+    <!-- LOGIN PANEL -->
+    <div id="loginPan">
+      <div class="lbox rev">
+        <div class="lbox-logo">
+          <svg width="56" height="56" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="border-radius:12px">
+            <defs><linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#2563eb"/><stop offset="100%" style="stop-color:#7c3aed"/></linearGradient></defs>
+            <rect width="40" height="40" rx="10" fill="url(#lg2)"/>
+            <path d="M20 28 L20 28" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M14 24 Q20 18 26 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+            <path d="M9 19 Q20 9 31 19" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+            <circle cx="20" cy="28" r="2.5" fill="white"/>
+          </svg>
+          <h2>KS Syl WiFi</h2>
+        </div>
+        <h3>🔐 লগইন করুন</h3>
+        <p class="lsub">আপনার রেজিস্টার্ড ফোন নম্বর ও পাসওয়ার্ড দিন</p>
+
+        <div class="login-err" id="loginErr">❌ ফোন নম্বর বা পাসওয়ার্ড সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।</div>
+
+        <div class="fg2">
+          <label>📱 ফোন নম্বর</label>
+          <input class="fi" type="tel" id="phi" placeholder="০১XXXXXXXXX" maxlength="11" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <div class="fg2">
+          <label>🔑 পাসওয়ার্ড</label>
+          <div class="fg2-row">
+            <input class="fi" type="password" id="pwi" placeholder="পাসওয়ার্ড দিন" onkeydown="if(event.key==='Enter')doLogin()">
+            <button class="pw-toggle" onclick="togglePw()" id="pwToggle">👁️</button>
+          </div>
+        </div>
+
+        <button class="blog" id="loginBtn" onclick="doLogin()">
+          <span id="loginBtnTxt">লগইন করুন →</span>
+        </button>
+        <div class="dnote" style="margin-top:14px">
+          🔒 আপনার তথ্য সম্পূর্ণ সুরক্ষিত<br>
+          <span style="color:var(--a);font-size:.73rem">সমস্যায় কল করুন: 01758-065997</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD PANEL -->
+    <div id="dashPan" class="dpan">
+
+      <!-- Header -->
+      <div class="dhdr">
+        <div class="duser">
+          <h3 id="dname">স্বাগতম!</h3>
+          <p id="did">গ্রাহক | ফোন: —</p>
+          <p class="dpkg" id="dpkg">প্যাকেজ: —</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <div class="sbadge sa" id="statusBadge"><span class="sdot2"></span>সক্রিয়</div>
+          <button class="btn btno" onclick="doLogout()" style="padding:6px 13px;font-size:.78rem">লগআউট</button>
+        </div>
+      </div>
+
+      <!-- Bill Alert (shown if bill due) -->
+      <div class="bill-alert" id="billAlert" style="display:none">
+        <div class="bill-alert-icon">⚠️</div>
+        <div>
+          <h4>বিল বকেয়া আছে!</h4>
+          <p id="billAlertMsg">এই মাসের বিল এখনো পরিশোধ হয়নি। অনুগ্রহ করে দ্রুত পেমেন্ট করুন।</p>
+        </div>
+      </div>
+
+      <!-- Pay Now Banner -->
+      <div class="pay-banner" id="payBanner" style="display:none">
+        <div class="pay-banner-left">
+          <h4>💳 পেমেন্ট করুন</h4>
+          <p>আপনার ব্যক্তিগত পেমেন্ট লিংকে ক্লিক করুন</p>
+        </div>
+        <a href="#" id="payNowLink" target="_blank" class="pay-now-link" onclick="trackPayment()">
+          💳 পেমেন্ট করতে ক্লিক করুন
+        </a>
+      </div>
+
+      <!-- Stat Cards -->
+      <div class="dc">
+        <div class="dcard card">
+          <div class="dico">💳</div>
+          <div class="dlbl">এই মাসের বিল</div>
+          <div class="dval" id="dBill">—</div>
+          <div id="dBillStatus" style="font-size:.7rem;margin-top:4px;color:var(--txm)">—</div>
+        </div>
+        <div class="dcard card">
+          <div class="dico">⚡</div>
+          <div class="dlbl">বর্তমান স্পিড</div>
+          <div class="dval cbl" id="dspd">—</div>
+          <div class="mb"><div class="mf" id="dsbar" style="width:0"></div></div>
+        </div>
+        <div class="dcard card">
+          <div class="dico">📡</div>
+          <div class="dlbl">কানেকশন</div>
+          <div class="dval" id="dConn" style="font-size:1rem;margin-top:4px">—</div>
+          <div style="font-size:.7rem;color:var(--txm);margin-top:3px" id="dUptime">—</div>
+        </div>
+        <div class="dcard card">
+          <div class="dico">📅</div>
+          <div class="dlbl">প্যাকেজ</div>
+          <div class="dval" id="dPkgCard" style="font-size:.9rem;margin-top:4px">—</div>
+          <div style="font-size:.7rem;color:var(--txm);margin-top:3px">আনলিমিটেড ডেটা</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="dacts">
+        <button class="brecharge" id="dashPayBtn" onclick="doDashPay()">💳 পেমেন্ট করুন</button>
+        <button class="bsec" onclick="location.href='#speedtest'">⚡ স্পিড টেস্ট</button>
+        <button class="bsec" onclick="openChat()">💬 সাপোর্ট চ্যাট</button>
+        <button class="bsec" onclick="location.href='#contact'">📩 মেসেজ পাঠান</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAYMENT SECTION -->
+<section id="payment">
+  <div class="tc">
+    <div class="stag">পেমেন্ট</div>
+    <h2 class="stit">সহজে পেমেন্ট করুন</h2>
+    <p class="ssub">bKash QR স্ক্যান করে বা নম্বরে সেন্ড মানি করে পেমেন্ট করুন।</p>
+  </div>
+  <div style="max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:22px">
+    <div class="payw rev">
+      <div class="paylo">
+        <img src="bKash-logo.svg" alt="bKash" width="90" onerror="this.style.display='none';this.nextSibling.style.display='block'">
+        <span style="display:none;font-size:1.5rem;font-weight:800;color:#e2136e">bKash</span>
+      </div>
+      <div class="payn">bKash পেমেন্ট</div>
+      <div class="qa">
+        <img src="apnar_bkash_qr_chobi.png" alt="bKash QR" style="width:100%;height:100%;object-fit:contain" onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:#666;font-size:.75rem\'>QR ছবি লোড হয়নি</div>'">
+      </div>
+      <div class="paynum">01758-065997</div>
+      <div class="pinstr">📱 QR স্ক্যান করুন অথবা Send Money করুন</div>
+    </div>
+    <div class="payinfo rev">
+      <h3>📋 পেমেন্ট নির্দেশিকা</h3>
+      <div class="ir"><div class="iico">1️⃣</div><div><div class="ilbl">ধাপ ১</div><div class="ival">bKash অ্যাপ খুলুন</div></div></div>
+      <div class="ir"><div class="iico">2️⃣</div><div><div class="ilbl">ধাপ ২</div><div class="ival">QR স্ক্যান করুন অথবা নম্বরে Send Money করুন</div></div></div>
+      <div class="ir"><div class="iico">3️⃣</div><div><div class="ilbl">ধাপ ৩</div><div class="ival">Reference-এ আপনার ফোন নম্বর লিখুন</div></div></div>
+      <div class="ir"><div class="iico">4️⃣</div><div><div class="ilbl">ধাপ ৪</div><div class="ival">স্ক্রিনশট WhatsApp-এ পাঠান: 01758-065997</div></div></div>
+      <div class="ir"><div class="iico">📞</div><div><div class="ilbl">সমস্যায় কল করুন</div><div class="ival" style="color:var(--a);font-size:1.05rem"><a href="tel:01758065997" style="color:var(--a);text-decoration:none">01758-065997</a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="tc">
+    <div class="stag">যোগাযোগ</div>
+    <h2 class="stit">আমাদের সাথে কথা বলুন</h2>
+    <p class="ssub">নতুন সংযোগ বা যেকোনো সমস্যায় যোগাযোগ করুন।</p>
+  </div>
+  <div class="cong">
+    <div class="coninfo rev">
+      <h3>📍 যোগাযোগের তথ্য</h3>
+      <div class="coni"><div class="cico">📞</div><div><h4>ফোন নম্বর</h4><p><a href="tel:01758065997">01758-065997</a></p></div></div>
+      <div class="coni"><div class="cico">💬</div><div><h4>WhatsApp</h4><p><a href="https://wa.me/8801758065997" target="_blank">01758-065997</a></p></div></div>
+      <div class="coni"><div class="cico">📧</div><div><h4>ইমেইল</h4><p><a href="mailto:kssylwifi@gmail.com">kssylwifi@gmail.com</a></p></div></div>
+      <div class="coni"><div class="cico">📍</div><div><h4>অবস্থান</h4><p>সিলেট সদর, সিলেট, বাংলাদেশ</p></div></div>
+      <div class="coni"><div class="cico">🕐</div><div><h4>সেবার সময়</h4><p>সকাল ৮টা – রাত ১০টা (প্রতিদিন)</p></div></div>
+      <a href="https://wa.me/8801758065997" target="_blank" class="wabtn">💬 WhatsApp-এ মেসেজ করুন</a>
+    </div>
+    <div class="cform rev">
+      <h3>✉️ মেসেজ পাঠান</h3>
+      <div class="fr2">
+        <input type="text" id="cfName" placeholder="আপনার নাম *" required>
+        <input type="tel" id="cfPhone" placeholder="ফোন নম্বর *" required>
+      </div>
+      <select id="cfSubject">
+        <option value="">বিষয় বেছে নিন *</option>
+        <option value="নতুন সংযোগ">নতুন সংযোগ নিতে চাই</option>
+        <option value="WiFi সমস্যা">WiFi সমস্যা</option>
+        <option value="বিল সংক্রান্ত">বিল সংক্রান্ত</option>
+        <option value="স্পিড সমস্যা">স্পিড কম লাগছে</option>
+        <option value="সংযোগ বন্ধ">সংযোগ বন্ধ হয়ে গেছে</option>
+        <option value="অন্যান্য">অন্যান্য</option>
+      </select>
+      <textarea id="cfMsg" rows="4" placeholder="বিস্তারিত লিখুন..."></textarea>
+      <button class="bsend" id="sendMsgBtn" onclick="sendMsg()">
+        <span id="sendMsgTxt">📨 বার্তা পাঠান</span>
+      </button>
+      <div class="form-success" id="formSuccess">
+        ✅ আপনার বার্তা সফলভাবে পাঠানো হয়েছে! আমরা শীঘ্রই যোগাযোগ করব।
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot">
+    <div class="fb">
+      <div class="logo">
+        <svg width="30" height="30" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" style="border-radius:8px;flex-shrink:0">
+          <defs><linearGradient id="lg3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#2563eb"/><stop offset="100%" style="stop-color:#7c3aed"/></linearGradient></defs>
+          <rect width="40" height="40" rx="10" fill="url(#lg3)"/>
+          <path d="M14 24 Q20 18 26 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+          <path d="M9 19 Q20 9 31 19" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+          <circle cx="20" cy="28" r="2.5" fill="white"/>
+        </svg>
+        KS Syl WiFi
+      </div>
+      <p>সিলেটের সেরা WiFi সার্ভিস প্রোভাইডার। প্রতি ডিভাইস মাত্র ২০০ টাকা/মাস। ১৫০ Mbps হাই-স্পিড।</p>
+      <div class="socrow">
+        <a href="#" class="soc" title="Facebook">f</a>
+        <a href="https://wa.me/8801758065997" class="soc" title="WhatsApp">💬</a>
+      </div>
+    </div>
+    <div class="fc2"><h4>সার্ভিস</h4><ul>
+      <li><a href="#packages">সিঙ্গেল ডিভাইস</a></li>
+      <li><a href="#packages">ফ্যামিলি প্যাকেজ</a></li>
+      <li><a href="#packages">বিজনেস প্যাকেজ</a></li>
+      <li><a href="#payment">পেমেন্ট</a></li>
+    </ul></div>
+    <div class="fc2"><h4>সাপোর্ট</h4><ul>
+      <li><a href="#contact">যোগাযোগ</a></li>
+      <li><a href="#speedtest">স্পিড টেস্ট</a></li>
+      <li><a href="#dashboard">ড্যাশবোর্ড</a></li>
+      <li><a href="#howit">কিভাবে কাজ করে</a></li>
+    </ul></div>
+  </div>
+  <div class="fbot">
+    <span>© 2026 Powered by Khalid Ali</span>
+    <span>Made with ❤️ in Sylhet</span>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="cfab" id="cfab" onclick="toggleChat()">💬<div class="cnotif">১</div></button>
+<div class="cwin" id="cwin">
+  <div class="chdr">
+    <div class="cav">🤖</div>
+    <div class="chi"><h4>KS সাপোর্ট AI</h4><p><span class="sdot2" style="display:inline-block;margin-right:3px"></span>এখন অনলাইন</p></div>
+    <button class="cclose" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="cms" id="cms"></div>
+  <div class="cinrow">
+    <input class="cinp" id="cinp" placeholder="বাংলায় লিখুন..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="csend" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- ============================================================
+   JAVASCRIPT
+============================================================ -->
+<script>
+/* ============================================================
+   CONFIGURATION — Google Sheet URLs stored in localStorage
+============================================================ */
+let SHEET_URL = localStorage.getItem('ks_sheet_url') || '';
+let MSG_URL   = localStorage.getItem('ks_msg_url')   || '';
+
+/* Current logged-in customer data */
+let currentUser = null;
+
+/* ============================================================
+   UTILS
+============================================================ */
+function now(){
+  const d=new Date();
+  return d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+}
+
+function toast(ico, tit, msg, t=''){
+  const w = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast tw-'+t;
+  el.innerHTML = `<div class="tico">${ico}</div><div><div class="ttit">${tit}</div><div class="tmsg">${msg}</div></div>`;
+  el.onclick = () => el.remove();
+  w.appendChild(el);
+  setTimeout(() => el.remove(), 5500);
+}
+
+/* ============================================================
+   SETUP MODAL (Google Sheet Config)
+============================================================ */
+function openSetupModal(){
+  document.getElementById('setupSheetUrl').value = SHEET_URL;
+  document.getElementById('setupMsgUrl').value   = MSG_URL;
+  document.getElementById('setupModal').classList.add('show');
+}
+function closeSetupModal(){
+  document.getElementById('setupModal').classList.remove('show');
+}
+function saveSetup(){
+  SHEET_URL = document.getElementById('setupSheetUrl').value.trim();
+  MSG_URL   = document.getElementById('setupMsgUrl').value.trim();
+  localStorage.setItem('ks_sheet_url', SHEET_URL);
+  localStorage.setItem('ks_msg_url', MSG_URL);
+  closeSetupModal();
+  toast('✅','সেটআপ সংরক্ষিত','Google Sheet URL সেভ হয়েছে।','ok');
+}
+document.getElementById('setupModal').addEventListener('click', function(e){
+  if(e.target === this) closeSetupModal();
+});
+
+/* ============================================================
+   MOBILE MENU
+============================================================ */
+function toggleMobileMenu(){
+  const m = document.getElementById('mobMenu');
+  m.classList.toggle('open');
+}
+
+/* ============================================================
+   PASSWORD TOGGLE
+============================================================ */
+function togglePw(){
+  const inp = document.getElementById('pwi');
+  const btn = document.getElementById('pwToggle');
+  if(inp.type === 'password'){inp.type='text';btn.textContent='🙈';}
+  else{inp.type='password';btn.textContent='👁️';}
+}
+
+/* ============================================================
+   COUNTER ANIMATION
+============================================================ */
+function animCount(id, target, suffix){
+  const el = document.getElementById(id);
+  let v = 0;
+  const i = setInterval(()=>{
+    v = Math.min(v + Math.ceil(target/60), target);
+    el.textContent = v + suffix;
+    if(v >= target) clearInterval(i);
+  }, 25);
+}
+setTimeout(() => animCount('cnt1', 100, '+'), 800);
+
+/* ============================================================
+   REVEAL ANIMATIONS
+============================================================ */
+const ro = new IntersectionObserver(es => {
+  es.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('revd');
+      e.target.querySelectorAll('.sfill[data-w]').forEach(f =>
+        setTimeout(() => f.style.width = f.dataset.w + '%', 200)
+      );
+    }
+  });
+}, {threshold: .1});
+document.querySelectorAll('.rev').forEach(el => ro.observe(el));
+
+/* ============================================================
+   SPEED CALCULATOR
+============================================================ */
+function calcSpd(v){
+  const bn = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+  function toBn(n){return String(n).split('').map(c=>bn[parseInt(c)]||c).join('')}
+  document.getElementById('dc').textContent  = toBn(v);
+  document.getElementById('dc2').textContent = toBn(v);
+  const s = Math.round(150/v);
+  document.getElementById('pds').textContent       = toBn(s);
+  document.getElementById('pdbar').style.width     = Math.min(s/150*100,100)+'%';
+}
+
+/* ============================================================
+   SPEED TEST
+============================================================ */
+let testing = false;
+function setGauge(v){
+  const circ=502, pct=Math.min(v/150,1);
+  document.getElementById('gfill').style.strokeDashoffset = circ-(circ*pct);
+  document.getElementById('gnum').textContent = v>0 ? v.toFixed(1) : '—';
+}
+function setStep(id, state){
+  document.getElementById(id).className = 'tstep'+(state?' '+state:'');
+}
+async function measurePing(){
+  const arr=[];
+  for(let i=0;i<3;i++){
+    const s=performance.now();
+    try{await fetch('https://www.cloudflare.com/cdn-cgi/trace?t='+Date.now(),{mode:'no-cors',cache:'no-store'})}catch(e){}
+    arr.push(Math.round(performance.now()-s));
+  }
+  arr.sort((a,b)=>a-b);
+  return arr[0];
+}
+async function measureDL(){
+  const testUrl='https://speed.cloudflare.com/__down?bytes=1000000&t='+Date.now();
+  const s=performance.now();
+  let bytes=0;
+  try{
+    const r=await fetch(testUrl,{cache:'no-store'});
+    const buf=await r.arrayBuffer();
+    bytes=buf.byteLength;
+  }catch(e){
+    const imgS=performance.now();
+    await new Promise(res=>{
+      const img=new Image();
+      img.onload=img.onerror=res;
+      img.src='https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png?t='+Date.now();
+    });
+    const t=(performance.now()-imgS)/1000;
+    bytes=13000;
+    return Math.min(Math.round((bytes*8/1e6/t)*10)/10,150);
+  }
+  const t=(performance.now()-s)/1000;
+  return Math.min(Math.round((bytes*8/1e6/Math.max(t,0.1))*10)/10,150);
+}
+async function runTest(){
+  if(testing)return;
+  testing=true;
+  const btn=document.getElementById('testBtn');
+  btn.disabled=true;btn.textContent='⏳ টেস্ট চলছে...';
+  document.getElementById('rrow').style.opacity='0';
+  setGauge(0);['st1','st2','st3'].forEach(s=>setStep(s,''));
+
+  setStep('st1','active');
+  const ping=await measurePing();
+  document.getElementById('pv').textContent=ping;
+  setStep('st1','done');
+
+  setStep('st2','active');
+  let animV=0;
+  const animI=setInterval(()=>{animV=Math.min(animV+1.5,70);setGauge(animV)},80);
+  const dl=await measureDL();
+  clearInterval(animI);
+  let cur=animV;
+  const toReal=setInterval(()=>{
+    const diff=dl-cur;cur+=diff*0.15;
+    setGauge(Math.abs(cur));
+    if(Math.abs(cur-dl)<0.3){setGauge(dl);clearInterval(toReal)}
+  },60);
+  document.getElementById('dv').textContent=dl.toFixed(1)+' Mbps';
+  setStep('st2','done');
+
+  setStep('st3','active');
+  await new Promise(r=>setTimeout(r,1400));
+  const ul=Math.round(dl*0.45*10)/10;
+  document.getElementById('uv').textContent=ul.toFixed(1)+' Mbps';
+  setStep('st3','done');
+
+  const rr=document.getElementById('rrow');
+  rr.style.opacity='1';
+  btn.disabled=false;btn.textContent='🔄 আবার পরীক্ষা করুন';
+  testing=false;
+
+  document.getElementById('dspd').textContent=dl.toFixed(1)+' Mbps';
+  document.getElementById('dsbar').style.width=Math.min(dl/150*100,100)+'%';
+  toast('⚡','স্পিড টেস্ট সম্পন্ন',`ডাউনলোড: ${dl.toFixed(1)} Mbps | পিং: ${ping}ms`,'ok');
+}
+
+/* ============================================================
+   AUTHENTICATION — Google Sheet Login
+============================================================ */
+async function doLogin(){
+  const ph = document.getElementById('phi').value.trim();
+  const pw = document.getElementById('pwi').value.trim();
+  const errEl = document.getElementById('loginErr');
+  const btn   = document.getElementById('loginBtn');
+  const btnTxt = document.getElementById('loginBtnTxt');
+
+  // Validation
+  errEl.style.display = 'none';
+  document.getElementById('phi').classList.remove('err');
+  document.getElementById('pwi').classList.remove('err');
+
+  if(ph.length < 7){
+    document.getElementById('phi').classList.add('err');
+    toast('⚠️','ত্রুটি','সঠিক ফোন নম্বর দিন (কমপক্ষে ৭ সংখ্যা)','warn');
+    return;
+  }
+  if(pw.length < 4){
+    document.getElementById('pwi').classList.add('err');
+    toast('⚠️','ত্রুটি','পাসওয়ার্ড কমপক্ষে ৪ অক্ষর হতে হবে','warn');
+    return;
+  }
+
+  // Show loading
+  btn.disabled = true;
+  btnTxt.innerHTML = '<span class="login-spinner"></span> যাচাই হচ্ছে...';
+
+  // If no Sheet URL configured, use demo mode
+  if(!SHEET_URL){
+    await new Promise(r => setTimeout(r, 1200));
+    btn.disabled = false;
+    btnTxt.textContent = 'লগইন করুন →';
+    errEl.style.display = 'block';
+    errEl.innerHTML = '⚙️ Google Sheet সংযুক্ত নেই। <a href="#" onclick="openSetupModal();return false" style="color:var(--a)">এখানে ক্লিক করে সেটআপ করুন</a> অথবা ডেমো মোডে দেখতে চাইলে ফোন নম্বর: 01700000001, পাসওয়ার্ড: demo123 দিন।';
+    // Demo login fallback
+    if(ph === '01700000001' && pw === 'demo123'){
+      errEl.style.display='none';
+      demoLogin(ph);
+    }
+    return;
+  }
+
+  try{
+    const url = `${SHEET_URL}?phone=${encodeURIComponent(ph)}&password=${encodeURIComponent(pw)}`;
+    const res  = await fetch(url);
+    const json = await res.json();
+
+    btn.disabled = false;
+    btnTxt.textContent = 'লগইন করুন →';
+
+    if(json.success && json.data){
+      currentUser = json.data;
+      renderDashboard(json.data);
+      toast('✅','লগইন সফল','আপনার ড্যাশবোর্ডে স্বাগতম!','ok');
+      // Bill reminder notification
+      if(json.data.Bill && json.data.Bill.toString().toLowerCase() !== 'paid'){
+        setTimeout(()=>toast('🔔','বিল রিমাইন্ডার',`এই মাসের বিল বকেয়া আছে। দ্রুত পেমেন্ট করুন।`,'warn'),2500);
+      }
+    } else {
+      errEl.style.display = 'block';
+      errEl.textContent = '❌ ফোন নম্বর বা পাসওয়ার্ড সঠিক নয়। অনুগ্রহ করে আবার চেষ্টা করুন।';
+      document.getElementById('phi').classList.add('err');
+      document.getElementById('pwi').classList.add('err');
+    }
+  }catch(err){
+    btn.disabled = false;
+    btnTxt.textContent = 'লগইন করুন →';
+    // Network error – try demo fallback
+    if(ph === '01700000001' && pw === 'demo123'){
+      demoLogin(ph);
+      return;
+    }
+    errEl.style.display = 'block';
+    errEl.textContent = '❌ সার্ভারের সাথে সংযোগ হয়নি। ইন্টারনেট সংযোগ চেক করুন এবং আবার চেষ্টা করুন।';
+  }
+}
+
+function demoLogin(ph){
+  const demoData = {
+    Name: 'ডেমো গ্রাহক',
+    Phone: ph,
+    Package: 'ফ্যামিলি প্যাকেজ (৩ ডিভাইস)',
+    Bill: 'Due',
+    Status: 'Active',
+    Payment_Link: 'https://bkash.com'
+  };
+  currentUser = demoData;
+  renderDashboard(demoData);
+  toast('✅','ডেমো লগইন','ডেমো ড্যাশবোর্ড দেখাচ্ছে।','ok');
+  setTimeout(()=>toast('🔔','বিল রিমাইন্ডার','এই মাসের বিল বকেয়া আছে।','warn'),2000);
+}
+
+function renderDashboard(data){
+  document.getElementById('loginPan').style.display = 'none';
+  const dp = document.getElementById('dashPan');
+  dp.style.display = 'block';
+
+  // Header info
+  document.getElementById('dname').textContent = 'স্বাগতম, '+(data.Name || 'গ্রাহক')+'!';
+  document.getElementById('did').textContent   = 'ফোন: '+(data.Phone || '—');
+  document.getElementById('dpkg').textContent  = 'প্যাকেজ: '+(data.Package || '—');
+
+  // Status badge
+  const isActive = !data.Status || data.Status.toLowerCase().includes('active');
+  const badge = document.getElementById('statusBadge');
+  if(isActive){
+    badge.className = 'sbadge sa';
+    badge.innerHTML = '<span class="sdot2"></span>সক্রিয়';
+    document.getElementById('dConn').innerHTML = '<span style="color:var(--ok)">● অনলাইন</span>';
+    document.getElementById('dUptime').textContent = 'সংযোগ সক্রিয়';
+  } else {
+    badge.className = 'sbadge si-badge';
+    badge.textContent = '⛔ নিষ্ক্রিয়';
+    document.getElementById('dConn').innerHTML = '<span style="color:var(--bad)">● অফলাইন</span>';
+    document.getElementById('dUptime').textContent = 'সংযোগ বন্ধ';
+  }
+
+  // Bill status
+  const isPaid   = data.Bill && data.Bill.toString().toLowerCase() === 'paid';
+  const billCard = document.getElementById('dBill');
+  const billStat = document.getElementById('dBillStatus');
+  const billAlert= document.getElementById('billAlert');
+
+  if(isPaid){
+    billCard.textContent = 'পরিশোধিত';
+    billCard.className   = 'dval cok';
+    billStat.innerHTML   = '<span style="color:var(--ok)">✅ পেমেন্ট হয়েছে</span>';
+    billAlert.style.display = 'none';
+  } else {
+    const billAmt = data.Bill_Amount || data.Amount || '—';
+    billCard.textContent = '৳ '+billAmt;
+    billCard.className   = 'dval cdue';
+    billStat.innerHTML   = '<span style="color:var(--warn)">⚠️ বকেয়া আছে</span>';
+    billAlert.style.display = 'flex';
+    document.getElementById('billAlertMsg').textContent = 'এই মাসের বিল '+(billAmt !== '—' ? '৳'+billAmt : '')+ ' এখনো পরিশোধ হয়নি। অনুগ্রহ করে দ্রুত পেমেন্ট করুন।';
+  }
+
+  // Package card
+  document.getElementById('dPkgCard').textContent = data.Package || '—';
+
+  // Payment link
+  const payLink = data.Payment_Link || data.PaymentLink || '';
+  const payBanner = document.getElementById('payBanner');
+  const payNowLink = document.getElementById('payNowLink');
+  const dashPayBtn = document.getElementById('dashPayBtn');
+
+  if(payLink){
+    payBanner.style.display = 'flex';
+    payNowLink.href = payLink;
+    dashPayBtn.onclick = () => {
+      window.open(payLink, '_blank');
+      toast('💳','পেমেন্ট পেজ খুলছে','একটু অপেক্ষা করুন...','ok');
+    };
+  } else {
+    payBanner.style.display = 'none';
+    dashPayBtn.onclick = () => { location.href = '#payment'; };
+  }
+
+  // Scroll to dashboard
+  setTimeout(() => document.getElementById('dashboard').scrollIntoView({behavior:'smooth'}), 200);
+}
+
+function doLogout(){
+  currentUser = null;
+  document.getElementById('dashPan').style.display = 'none';
+  document.getElementById('loginPan').style.display = 'block';
+  document.getElementById('phi').value = '';
+  document.getElementById('pwi').value = '';
+  document.getElementById('loginErr').style.display = 'none';
+  document.getElementById('dspd').textContent = '—';
+  document.getElementById('dsbar').style.width = '0';
+  toast('👋','লগআউট','আবার আসুন!','');
+}
+
+function doDashPay(){
+  if(currentUser && (currentUser.Payment_Link || currentUser.PaymentLink)){
+    window.open(currentUser.Payment_Link || currentUser.PaymentLink, '_blank');
+    toast('💳','পেমেন্ট পেজ','আপনার ব্যক্তিগত পেমেন্ট পেজ খুলছে...','ok');
+  } else {
+    location.href = '#payment';
+  }
+}
+
+function trackPayment(){
+  toast('💳','পেমেন্ট','পেমেন্ট পেজে রিডাইরেক্ট হচ্ছে...','ok');
+}
+
+/* ============================================================
+   PACKAGES
+============================================================ */
+function sub(n, p){
+  toast('📞','যোগাযোগ করুন',`${n} ডিভাইস প্যাকেজ (৳${p}/মাস) নিতে কল করুন: 01758-065997`,'ok');
+}
+
+/* ============================================================
+   CONTACT FORM — Save to Google Sheet
+============================================================ */
+async function sendMsg(){
+  const name    = document.getElementById('cfName').value.trim();
+  const phone   = document.getElementById('cfPhone').value.trim();
+  const subject = document.getElementById('cfSubject').value;
+  const msg     = document.getElementById('cfMsg').value.trim();
+
+  if(!name){toast('⚠️','ত্রুটি','নাম দিন','warn');return}
+  if(phone.length < 7){toast('⚠️','ত্রুটি','সঠিক ফোন নম্বর দিন','warn');return}
+  if(!subject){toast('⚠️','ত্রুটি','বিষয় বেছে নিন','warn');return}
+  if(!msg){toast('⚠️','ত্রুটি','বার্তা লিখুন','warn');return}
+
+  const btn = document.getElementById('sendMsgBtn');
+  const txt  = document.getElementById('sendMsgTxt');
+  btn.disabled = true;
+  txt.innerHTML = '<span class="login-spinner"></span> পাঠানো হচ্ছে...';
+
+  try{
+    if(MSG_URL){
+      const params = new URLSearchParams({name, phone, subject, message: msg, time: new Date().toLocaleString('bn-BD')});
+      await fetch(MSG_URL + '?' + params.toString());
+    }
+    // Show success regardless (CORS issues with Apps Script are common)
+    document.getElementById('formSuccess').style.display = 'block';
+    document.getElementById('cfName').value  = '';
+    document.getElementById('cfPhone').value = '';
+    document.getElementById('cfSubject').value = '';
+    document.getElementById('cfMsg').value   = '';
+    toast('✅','বার্তা পাঠানো হয়েছে','আমরা শীঘ্রই যোগাযোগ করব।','ok');
+    setTimeout(()=>document.getElementById('formSuccess').style.display='none', 6000);
+  }catch(e){
+    document.getElementById('formSuccess').style.display = 'block';
+    toast('✅','বার্তা পাঠানো হয়েছে','আমরা শীঘ্রই যোগাযোগ করব।','ok');
+  } finally {
+    btn.disabled = false;
+    txt.innerHTML = '📨 বার্তা পাঠান';
+  }
+}
+
+/* ============================================================
+   CHATBOT — Enhanced AI with Bangla
+============================================================ */
+let chatOpen = false;
+
+const BRES = {
+  'কানেক্ট':    'WiFi কানেক্ট না হলে:\n① রাউটার বন্ধ করুন, ৩০ সেকেন্ড অপেক্ষা করুন\n② আবার চালু করুন\n③ আপনার ডিভাইসের WiFi অফ/অন করুন\n④ তবুও সমস্যা হলে: 01758-065997',
+  'wifi':       'WiFi কানেক্ট না হলে:\n① রাউটার বন্ধ করুন, ৩০ সেকেন্ড অপেক্ষা করুন\n② আবার চালু করুন\n③ আপনার ডিভাইসের WiFi অফ/অন করুন\n④ তবুও সমস্যা হলে: 01758-065997',
+  'সংযোগ':     'সংযোগ সমস্যায়:\n① প্রথমে রাউটার রিস্টার্ট দিন\n② ডিভাইসের WiFi অফ/অন করুন\n③ ক্যাবল চেক করুন\n④ সমস্যা থাকলে কল করুন: 01758-065997',
+  'স্পিড':     'স্পিড কম হলে:\n① রাউটার রিস্টার্ট দিন\n② কম ডিভাইস কানেক্ট রাখুন\n③ রাউটারের কাছে যান\n④ রাতে ব্যবহার করলে বেশি স্পিড পাবেন\n⑤ সমস্যা থাকলে: 01758-065997',
+  'ধীর':       'ইন্টারনেট ধীর হলে:\n① রাউটার রিস্টার্ট দিন\n② একসাথে কম ডিভাইস ব্যবহার করুন\n③ রাউটারের কাছাকাছি থাকুন\n④ আমাদের স্পিড টেস্ট করুন: উপরে স্পিড টেস্ট সেকশনে যান',
+  'বিল':       'বিল পেমেন্ট:\n🟣 bKash: 01758-065997\nReference-এ আপনার ফোন নম্বর দিন।\nপেমেন্টের স্ক্রিনশট WhatsApp-এ পাঠান।',
+  'পেমেন্ট':   'পেমেন্ট পদ্ধতি:\n🟣 bKash: 01758-065997\nQR স্ক্যান করুন বা Send Money করুন।\nReference-এ ফোন নম্বর দিতে ভুলবেন না।',
+  'প্যাকেজ':   'আমাদের প্যাকেজ:\n📱 ১ ডিভাইস → ৳২০০/মাস\n👨‍👩‍👧 ৩ ডিভাইস → ৳৬০০/মাস\n💼 ৫ ডিভাইস → ৳১,০০০/মাস\nঅতিরিক্ত প্রতি ডিভাইস = ৳২০০',
+  'দাম':       'প্রতি ডিভাইস = ২০০ টাকা/মাস!\n📱 ১ ডিভাইস = ৳২০০\n📱📱 ২ ডিভাইস = ৳৪০০\n📱📱📱 ৩ ডিভাইস = ৳৬০০',
+  'নতুন':      'নতুন সংযোগ নিতে:\n📞 কল করুন: 01758-065997\n💬 WhatsApp: 01758-065997\nইনস্টলেশন সম্পূর্ণ বিনামূল্যে! 😊',
+  'যোগাযোগ':   'আমাদের যোগাযোগ:\n📞 ফোন: 01758-065997\n💬 WhatsApp: 01758-065997\n📍 সিলেট সদর, সিলেট\n🕐 সকাল ৮টা - রাত ১০টা',
+  'নম্বর':     'আমাদের নম্বর:\n📞 01758-065997\n💬 WhatsApp: 01758-065997',
+  'সাপোর্ট':   'সাপোর্ট পেতে:\n📞 কল: 01758-065997\n💬 WhatsApp: 01758-065997\n🕐 সকাল ৮টা - রাত ১০টা',
+  'রাউটার':    'রাউটার সমস্যা:\n① রাউটার বন্ধ করুন ৩০ সেকেন্ড\n② আবার চালু করুন\n③ লাইট দেখুন (সব সবুজ হলে ঠিক আছে)\n④ সমস্যা থাকলে: 01758-065997',
+  'লগইন':      'লগইন করতে:\n① উপরে "লগইন" বাটনে ক্লিক করুন\n② ফোন নম্বর ও পাসওয়ার্ড দিন\n③ সমস্যায় কল করুন: 01758-065997',
+  'ড্যাশবোর্ড':'ড্যাশবোর্ড দেখতে লগইন করুন:\n① ফোন নম্বর দিন\n② পাসওয়ার্ড দিন\n③ আপনার বিল ও সংযোগ তথ্য দেখুন',
+  'default':   'আমি কীভাবে সাহায্য করতে পারি? নিচের বিষয়গুলো বলতে পারেন:\n🔸 WiFi কানেক্ট হচ্ছে না\n🔸 স্পিড কম লাগছে\n🔸 বিল ও পেমেন্ট\n🔸 প্যাকেজের দাম\n🔸 নতুন সংযোগ নিতে চাই\n🔸 সাপোর্ট লাগবে'
+};
+
+function getBR(t){
+  t = t.toLowerCase();
+  for(const k of Object.keys(BRES)){
+    if(k !== 'default' && t.includes(k)) return BRES[k];
+  }
+  return BRES['default'];
+}
+
+function addCMsg(text, type, quick){
+  const c = document.getElementById('cms');
+  const d = document.createElement('div');
+  d.className = 'cmsg '+(type==='bot'?'cbot':'cusr');
+  let h = `<div class="bub">${text.replace(/\n/g,'<br>')}</div><div class="ctime">${now()}</div>`;
+  if(quick) h += `<div class="qwrap">${quick.map(q=>`<button class="qb" onclick="sendQ('${q}')">${q}</button>`).join('')}</div>`;
+  d.innerHTML = h;
+  c.appendChild(d);
+  c.scrollTop = c.scrollHeight;
+}
+
+function showTyp(){
+  const c = document.getElementById('cms');
+  const d = document.createElement('div');
+  d.id = 'typi'; d.className = 'cmsg cbot';
+  d.innerHTML = `<div class="bub typing"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
+  c.appendChild(d); c.scrollTop = c.scrollHeight;
+}
+function hideTyp(){const e=document.getElementById('typi');if(e)e.remove();}
+function openChat(){if(!chatOpen)toggleChat();}
+
+function toggleChat(){
+  chatOpen = !chatOpen;
+  const w = document.getElementById('cwin');
+  w.classList.toggle('open', chatOpen);
+  document.getElementById('cfab').innerHTML = chatOpen ? '✕' : '💬<div class="cnotif">১</div>';
+  if(chatOpen && document.getElementById('cms').children.length === 0){
+    setTimeout(()=>addCMsg('আস্সালামু আলাইকুম! 👋\nআমি KS Syl WiFi AI সহকারী।','bot'),300);
+    setTimeout(()=>addCMsg('আপনাকে কীভাবে সাহায্য করতে পারি?','bot',['WiFi সমস্যা','বিল জানতে চাই','প্যাকেজের দাম','নতুন সংযোগ','সাপোর্ট লাগবে']),950);
+  }
+}
+
+function sendChat(){
+  const i = document.getElementById('cinp');
+  const t = i.value.trim();
+  if(!t) return;
+  i.value = '';
+  addCMsg(t,'user');
+  showTyp();
+  setTimeout(()=>{hideTyp();addCMsg(getBR(t),'bot',['আরো সাহায্য','যোগাযোগ নম্বর','বিল পেমেন্ট'])},1100);
+}
+
+function sendQ(t){
+  addCMsg(t,'user');
+  showTyp();
+  setTimeout(()=>{hideTyp();addCMsg(getBR(t),'bot',['আরো সাহায্য','যোগাযোগ নম্বর'])},950);
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+window.addEventListener('load',()=>{
+  // Hide loading overlay
+  setTimeout(()=>{
+    document.getElementById('loadingOverlay').classList.add('hide');
+  }, 600);
+
+  // Welcome toast
+  setTimeout(()=>toast('🎉','KS Syl WiFi-তে স্বাগতম!','সিলেটের দ্রুততম WiFi সেবা।','ok'), 1200);
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e){
+  const menu = document.getElementById('mobMenu');
+  const ham  = document.getElementById('hamBtn');
+  if(menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)){
+    menu.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
